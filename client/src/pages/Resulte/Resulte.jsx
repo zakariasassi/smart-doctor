@@ -28,13 +28,13 @@ function Resulte() {
 
   return (
     <div>
-       <p className='text-right p-5'>نتائج تحليل الاعراض</p>
-        <ul className='float-right p-5'>
+       <p className='text-right p-5 font-bold text-3xl'>نتائج تحليل الاعراض</p>
+        <ul className='float-right p-5 bg-slate-100 w-screen text-right m-2 h-screen'>
           {
             resulte.map(index => {
               return (
                 <>
-                  <li>{index.description}</li>
+                  <li className='text-xl p-2'>{index.description} <span className=' text-3xl font-bold text-teal-700'>-</span></li>
                 </>
               )
             })

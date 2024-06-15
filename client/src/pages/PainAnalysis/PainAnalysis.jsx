@@ -84,7 +84,7 @@ function PainAnalysis() {
         </button>
         <a
           className="bg-blue-500 p-3 rounded-lg hover:bg-blue-700 text-white mt-8"
-          href="/"
+          href="/body"
         >
           عودة
         </a>
