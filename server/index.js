@@ -8,6 +8,8 @@ const questionRouter = require('./router/questionRouter')
 const userRouter = require('./router/UserRouter')
 
 const cors = require('cors')
+const User = require('./schema/User')
+const Resulte = require('./schema/Resulte')
 
 mongoose.connect('mongodb://localhost/SmartDoctor' , {
     useNewUrlParser : true,
@@ -22,7 +24,6 @@ mongoose.connect('mongodb://localhost/SmartDoctor' , {
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 
 

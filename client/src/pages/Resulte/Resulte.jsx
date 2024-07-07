@@ -1,47 +1,48 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 function Resulte() {
+  const [resulte, setResulte] = useState([]);
+  const { data } = useParams();
 
-  const [ resulte , setResulte ] = useState([]);
-
-  const { data } = useParams(); // Assume data is a JSON string of IDs
   const getAllData = async () => {
     try {
-      // const idsArray = JSON.parse(data); // Convert data string to an array
       const res = await axios.get(`http://localhost:3000/resulte/all/${JSON.stringify(Array(data))}`);
-      if (res) {
+      if (res.data) {
+        setResulte(res.data);
         console.log(res.data);
-        setResulte(res.data)
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching results:', error);
     }
   };
 
   useEffect(() => {
-    console.log(Array(data));
-
     getAllData();
-  }, []); // Depend on data to re-run if data changes
-
+  }, []); // Only run once on mount
 
   return (
-    <div>
-       <p className='text-right p-5 font-bold text-3xl'>نتائج تحليل الاعراض</p>
-        <ul className='float-right p-5 bg-slate-100 w-screen text-right m-2 h-screen'>
-          {
-            resulte.map(index => {
-              return (
-                <>
-                  <li className='text-xl p-2'>{index.description} <span className=' text-3xl font-bold text-teal-700'>-</span></li>
-                </>
-              )
-            })
-          }
+    <div className="flex items-center justify-center h-screen text-right bg-gradient-to-br from-teal-300 to-teal-600" dir="rtl" >
+      <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="mb-8 text-3xl font-bold text-center text-teal-700">نتائج تحليل الأعراض</h1>
+        <ul className="space-y-6">
+          {resulte.map((index, idx) => (
+            <li key={idx} className="p-4 text-white bg-teal-500 rounded-lg shadow-md">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-right">{index.description}</h2>
+                <span className="text-2xl font-bold text-white">-</span>
+              </div>
+              <p className="text-white">{index.advice}</p>
+            </li>
+          ))}
         </ul>
+        <p className="mt-8 text-right text-gray-700">
+          قد لا تكون قائمة الأمراض المحتملة هذه كاملة، وغرضها الوحيد هو الاسترشاد والاطلاع على ما يمكن أن يكون سبباً لهذه الأعراض، ولا تحل محل رأي الطبيب المختص، ولا يمكن اعتبارها استشارة أو نصيحة طبية.
+        </p>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Resulte
+export default Resulte;

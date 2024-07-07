@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const notify = (msg) => toast(msg , {
-    position:'bottom-right'
+    position:'top-center'
   });
 
     const navigate = useNavigate()
@@ -18,10 +18,9 @@ function Login() {
   
     const loginUser = async (e) => {
       e.preventDefault();
-      console.log(email, password);
-      if(!email || !password) {
-        notify("الرجاء ادخال البيانات")
-      }
+      // if(!email || !password) {
+      //   notify("الرجاء ادخال البيانات")
+      // }
       try {
           const response = await axios.post("http://localhost:3000/user/login", {
               email: email,
@@ -37,7 +36,7 @@ function Login() {
           }
   
       } catch (error) {
-         notify(error.message)
+         notify(error.response.data.message)
           console.error("Error creating user:", error.response ? error.response.data : error.message);
       }
   };
@@ -47,14 +46,14 @@ function Login() {
     <>
     <ToastContainer />
     
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
-        className="mx-auto h-full w-full"
+        className="w-full h-full mx-auto"
         src="https://cdn.pixabay.com/photo/2021/11/20/03/17/doctor-6810751_640.png"
         alt="Your Company"
       />
-      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
         تسجيل دخول 
       </h2>
     </div>
@@ -116,14 +115,13 @@ function Login() {
     
      
 
-      {/* <p className="mt-10 text-center text-sm text-gray-500">
+      {/* <p className="mt-10 text-sm text-center text-gray-500">
         Not a member?{' '}
         <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
           Start a 14 day free trial
         </a>
       </p> */}
     </div>
-    <a className="text-center mt-3 text-blue-500" href="/terms">الشروط والاحكام</a>
 
   </div>
   

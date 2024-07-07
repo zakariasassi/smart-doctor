@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import doctor from '../../assets/doctor2.png'
+import toast, { Toaster } from 'react-hot-toast';
+
 function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,7 +24,6 @@ function Signup() {
         gender: gender,
       });
 
-      console.log(response.data);
       if (response.status === 201) {
         window.localStorage.setItem("user", JSON.stringify(response.data));
         window.localStorage.setItem("isLogin", true);
@@ -29,27 +31,29 @@ function Signup() {
         navigate("/home");
       }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.error(
         "Error creating user:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data.message : error.message
       );
     }
   };
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-row justify-center px-6 py-12 lg:px-8 items-center">
-        <div className=" w-auto sm:mx-auto sm:w-full sm:max-w-sm">
+    <Toaster/>
+      <div className="flex flex-row items-center justify-center flex-1 min-h-full lg:px-8">
+        <div className=" w-[60%]  ">
           <img
-            className="mx-auto h-[800px] w-[800px] "
-            src="https://cdni.iconscout.com/illustration/premium/thumb/online-doctor-3985495-3299317.png?f=webp"
+            className="w-full h-screen mx-auto "
+            src={doctor}
             alt="Your Company"
           />
           
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <div className="mt-10 w-[40%] sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             فتح حساب جديد
           </h2>
           <div>
@@ -120,7 +124,7 @@ function Signup() {
             <div className="mt-2">
               <select
                 onChange={(e) => setGender(e.target.value)}
-                className="select select-bordered select-sm w-full"
+                className="w-full select select-bordered select-sm"
               >
                 <option disabled selected>
                   الجنس
@@ -156,18 +160,23 @@ function Signup() {
 
           <button
             onClick={(e) => createUser(e)}
-            className="flex w-full justify-center rounded-md bg-teal-300 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex w-full mt-5 justify-center rounded-md bg-teal-300 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             انشاء حساب
           </button>
 
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
+        <div className="flex justify-center w-full">
+        <a className="mt-3 text-xs font-bold text-center" href="/terms" >  <a className="font-light">بالتسجيل في الموقع انت توافق علي</a> الشروط والاحكام  {" "}</a>
+
+        </div>
+          {/* <p className="mt-10 text-sm text-center text-gray-500">
             Not a member?{' '}
             <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Start a 14 day free trial
             </a>
           </p> */}
         </div>
+
       </div>
     </>
   );

@@ -9,8 +9,12 @@ const Resulte = new Schema({
     },
     qutionID : {
         type : String
-    } 
+    } ,
+    advice : {
+        type : String
+    }
 });
+
 
 
 
